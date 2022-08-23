@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 import secrets
 
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
@@ -28,6 +28,7 @@ class BankList(Base):
     ipn = sa.Column(sa.BigInteger, unique=True)
     iban = sa.Column(sa.String, unique=True)
     swift = sa.Column(sa.String, unique=True)
+    rates = relationship("ExchangeRates", backref="bank")
 
 
 class Currency(Base):
@@ -35,6 +36,7 @@ class Currency(Base):
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     code = sa.Column(sa.String, nullable=False, unique=True, index=True)
     name = sa.Column(sa.String, nullable=False, unique=True)
+    rates = relationship("ExchangeRates", backref="currency")
 
 
 class ExchangeRates(Base):
@@ -46,4 +48,3 @@ class ExchangeRates(Base):
     purchase = sa.Column(sa.Float, nullable=False)
     sale = sa.Column(sa.Float, nullable=False)
     date = sa.Column(sa.Date, server_default=sa.func.now())
-
