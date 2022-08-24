@@ -1,5 +1,4 @@
 import os
-import databases
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
@@ -15,8 +14,6 @@ DATABASE_URL = f"postgresql+asyncpg://{db_user}:{db_pass}@{db_host}/{db_name}"
 
 engine = create_async_engine(DATABASE_URL, future=True)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False, autoflush=False)
-
-database = databases.Database(DATABASE_URL)
 
 
 async def get_session():

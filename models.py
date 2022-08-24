@@ -33,6 +33,7 @@ class BankList(Base):
 
 class Currency(Base):
     __tablename__ = "currency"
+
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     code = sa.Column(sa.String, nullable=False, unique=True, index=True)
     name = sa.Column(sa.String, nullable=False, unique=True)
@@ -41,7 +42,9 @@ class Currency(Base):
 
 class ExchangeRates(Base):
     __tablename__ = "exchange_rates"
-
+    __table_args__ = (
+        sa.UniqueConstraint("bank_id", "currency_id", "date", name="unique_exchange_rates"),
+    )
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     bank_id = sa.Column(sa.Integer, sa.ForeignKey("bank_list.id"))
     currency_id = sa.Column(sa.Integer, sa.ForeignKey("currency.id"))
