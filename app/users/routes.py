@@ -2,12 +2,11 @@ import app.users.schemas as schemas
 import models
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import RedirectResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_session
-from app.users.auth.router import router as auth, get_hashed_password
+from app.users.auth.routes import router as auth, get_hashed_password
 
 
 router = APIRouter()
