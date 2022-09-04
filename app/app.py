@@ -2,7 +2,12 @@ from fastapi import FastAPI
 from app.users.routes import router as users
 from app.exchanges.routes import router as exchanges
 
-app = FastAPI()
+app = FastAPI(
+    title="bankApi",
+    redoc_url="",
+    docs_url="",
+    openapi_url=""
+)
 # app.include_router(users, tags=["Users"], prefix="/user")
 app.include_router(exchanges, tags=["Exchanges"], prefix="/exchange")
 
