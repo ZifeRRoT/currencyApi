@@ -12,7 +12,7 @@ db_name = os.environ.get("DB_NAME")
 
 DATABASE_URL = f"postgresql+asyncpg://{db_user}:{db_pass}@{db_host}/{db_name}"
 
-engine = create_async_engine(DATABASE_URL, future=True, echo=True)
+engine = create_async_engine(DATABASE_URL, future=True)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False, autoflush=False)
 
 

@@ -16,7 +16,7 @@ router.include_router(auth, prefix="/auth", tags=["Auth"])
 
 @router.post('/signup')
 async def signup(data: schemas.UserCreate, session: AsyncSession = Depends(get_session)):
-    user = await session.execute(select(models.Account).filter_by(email=data.email))
+    user = await session.execute(select(models.Account).filter(models.Account.email.ilike(data.email)))
     if user.scalar():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="User with this email already exist"
