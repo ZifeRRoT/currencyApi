@@ -1,7 +1,7 @@
 import sqlalchemy as sa
 import secrets
 
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base, relationship, backref
 
 Base = declarative_base()
 
@@ -10,7 +10,7 @@ class Account(Base):
     __tablename__ = "account"
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    name = sa.Column(sa.VARCHAR(30), nullable=False, unique=True)
+    name = sa.Column(sa.VARCHAR(30), nullable=False)
     email = sa.Column(sa.String, nullable=False, unique=True)
     password = sa.Column(sa.String, nullable=False)
     is_active = sa.Column(sa.BOOLEAN, default=True)
@@ -28,7 +28,7 @@ class BankList(Base):
     ipn = sa.Column(sa.BigInteger, unique=True)
     iban = sa.Column(sa.String, unique=True)
     swift = sa.Column(sa.String, unique=True)
-    rates = relationship("ExchangeRates", backref="bank")
+    rates = relationship("ExchangeRates", backref=backref("bank", lazy='joined'), lazy='dynamic')
 
 
 class Currency(Base):
@@ -37,7 +37,7 @@ class Currency(Base):
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     code = sa.Column(sa.String, nullable=False, unique=True, index=True)
     name = sa.Column(sa.String, nullable=False, unique=True)
-    rates = relationship("ExchangeRates", backref="currency")
+    rates = relationship("ExchangeRates", backref=backref("currency", lazy='joined'), lazy='dynamic')
 
 
 class ExchangeRates(Base):

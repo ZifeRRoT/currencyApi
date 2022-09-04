@@ -1,19 +1,16 @@
 from pydantic import BaseModel, EmailStr
-from datetime import datetime
 
 
-class UserBase(BaseModel):
+class UserCreate(BaseModel):
     name: str
     email: EmailStr
-
-
-class UserCreate(UserBase):
     password: str
 
 
-class User(UserBase):
+class UserOut(BaseModel):
     id: int
-    registered_at: datetime
+    name: str
+    email: EmailStr
     api_key: str
 
     class Config:

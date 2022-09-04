@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from app.users.routes import router as users
+from app.exchanges.routes import router as exchanges
 
 app = FastAPI()
-app.include_router(users, tags=["Users"], prefix="/user")
+# app.include_router(users, tags=["Users"], prefix="/user")
+app.include_router(exchanges, tags=["Exchanges"], prefix="/exchange")
 
 
 @app.on_event('startup')
