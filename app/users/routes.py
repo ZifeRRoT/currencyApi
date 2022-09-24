@@ -10,7 +10,7 @@ from app.users.auth.routes import router as auth, get_hashed_password
 
 
 router = APIRouter()
-router.include_router(auth, prefix="/auth", tags=["Auth"])
+router.include_router(auth, prefix="/auth")
 
 
 @router.post('/signup')
