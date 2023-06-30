@@ -26,6 +26,7 @@ async def get(
         date: data = None,
         code: str = None,
         mfo: int = None,
+        bank_name: bool = False,
         session: AsyncSession = Depends(get_session)
 ):
     if not token:
@@ -43,7 +44,7 @@ async def get(
     if not currencies:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     new_list = [schemas.Exchange(
-        bank=x.bank.mfo,
+        bank=x.bank.name if bank_name==True else x.bank.mfo,
         currency=x.currency.code,
         purchase=x.purchase,
         sale=x.sale,
